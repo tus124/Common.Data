@@ -1,6 +1,7 @@
 ﻿using Common.Data.Item;
 using Dapper;
 using MonkeyCache.FileStore;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 
@@ -36,27 +37,32 @@ public abstract class BaseSql
     public BaseSql()
     {
         Barrel.ApplicationId = this.AppId;
+        this.Parameters = new List<Parameter>();
     }
 
     public BaseSql(string connectionString)
     {
         this.ConnectionString = connectionString;
+        this.Parameters = new List<Parameter>();
     }
 
     public BaseSql(string connectionString, string command) : this(connectionString)
     {
         this.Command = command;
+        this.Parameters = new List<Parameter>();
     }
      
     public BaseSql(string connectionString, string command, CommandType? commandType)
         : this(connectionString, command)
     {
         this.CommandType = commandType;
+        this.Parameters = new List<Parameter>();
     }
 
     public BaseSql(string connectionString, string command, List<Parameter> parameters)
         : this(connectionString, command)
     {
+        this.Parameters = new List<Parameter>();
         this.Parameters.AddRange(parameters);
     }
     
@@ -93,6 +99,9 @@ public abstract class BaseSql
         parameter.Size = parameter.Size ?? -1;
         parameter.Size = parameter.Size == 0 ? -1 : parameter.Size;
 
+        //this.Parameters = new List<Parameter>();
+
+
         this.Parameters.Add(parameter);
     }
 
@@ -100,6 +109,8 @@ public abstract class BaseSql
     {
         size = size ?? -1;
         size = size == 0 ? -1 : size;
+
+        //this.Parameters = new List<Parameter>();
 
         this.Parameters.Add(new Parameter
         {
@@ -116,6 +127,7 @@ public abstract class BaseSql
     {
         size = size ?? -1;
         size = size == 0 ? -1 : size;
+        //this.Parameters = new List<Parameter>();
 
         this.Parameters.Add(new Parameter
         {

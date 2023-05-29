@@ -36,6 +36,7 @@ public partial class SqlClient : Base.BaseSql, IDisposable
             }
 
             rows = this.Connection.Execute(this.Command, p, this.transaction, this.Timeout, this.CommandType);
+            
             this.Parameters.ForEach(item => this.UpdateParameters(ref item, p));
             if(this.ClearCacheOnExec)
             {
